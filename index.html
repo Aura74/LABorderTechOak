@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Stick+No+Bills:wght@200;300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>LA-Studio</title>
+  </head>
+  <body>
+    <div class="container">
+      <!-- nav container -->
+      <nav class="nav-container">
+        <!-- right nav -->
+        <ul class="left-side">
+          <a href=""><i class="fa-brands fa-twitter"></i></a>
+          <a href=""><i class="fa-brands fa-facebook-f"></i></a>
+          <a href=""><i class="fa-brands fa-pinterest-p"></i></a>
+          <a href=""><i class="fa-brands fa-instagram"></i></a>
+        </ul>
+        <!-- left nav -->
+        <ul class="right-side">
+          <li>
+            <a class="greenLinkText" href=""
+              >Inspiration <i class="fa-solid fa-map-pin"></i
+            ></a>
+          </li>
+          <li><a href="#">Fakta</a></li>
+          <li><a href="#">Exempel</a></li>
+          <li><a href="#">Kontakta migs</a></li>
+        </ul>
+      </nav>
+
+      <main class="mainContainer">
+        <h1 class="headHeading">LA-Studio</h1>
+        <ul class="menuDown">
+          <li><a href="#">HTML</a></li>
+          <li><a href="#">CSS</a></li>
+          <li><a href="#">.NET 8</a></li>
+          <li><a href="#">React</a></li>
+          <li><a href="#">JavaScript</a></li>
+          <li><a href="#">Om mig</a></li>
+          <li><a href="#">Galleri</a></li>
+        </ul>
+
+        <!-- <div class="carusell">
+          <h2 class="rubrikInPicture overlay">The Lake House</h2>
+          <a class="buttonInPicture overlay" href="http://"
+            >VEIW THE CASE STUDY</a
+          >
+          <img
+            class="carusellBilden"
+            src="img/Lakehouse.jpg"
+            alt="Carusellbild"
+          />
+        </div> -->
+
+        <!-- annan karusell -->
+        <div class="slideshow-container">
+          <div class="mySlides fade">
+            <div class="numbertext">1 / 5</div>
+            <img src="img/karusell/gator1.jpg" style="width: 100%" />
+            <div class="glass"></div>
+
+            <div class="text">HEMSIDA 1</div>
+            <a class="buttonInPicture overlay" href="http://"
+              >Klicka här för se hemsidan</a
+            >
+          </div>
+
+          <div class="mySlides fade">
+            <div class="numbertext">2 / 5</div>
+            <img src="img/karusell/kontortomt1.jpg" style="width: 100%" />
+            <div class="text">HEMSIDA 2</div>
+            <a class="buttonInPicture overlay" href="http://"
+              >Klicka här för se hemsidan</a
+            >
+          </div>
+
+          <div class="mySlides fade">
+            <div class="numbertext">3 / 5</div>
+            <img src="img/karusell/guldator1.jpg" style="width: 100%" />
+            <div class="text">HEMSIDA 4</div>
+            <a class="buttonInPicture overlay" href="http://"
+              >Klicka här för se hemsidan</a
+            >
+          </div>
+
+          <div class="mySlides fade">
+            <div class="numbertext">4 / 5</div>
+            <img src="img/karusell/guldator2.jpg" style="width: 100%" />
+            <div class="text">HEMSIDA 4</div>
+            <a class="buttonInPicture overlay" href="http://"
+              >Klicka här för se hemsidan</a
+            >
+          </div>
+
+          <div class="mySlides fade">
+            <div class="numbertext">5 / 5</div>
+            <img src="img/karusell/storm1.jpg" style="width: 100%" />
+            <div class="text glass">HEMSIDA 5</div>
+            <a class="buttonInPicture overlay" href="http://"
+              >Klicka här för se hemsidan</a
+            >
+          </div>
+        </div>
+        <br />
+
+        <div class="trecirklarunderkarusell">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+
+        <div class="MiddleContainer">
+          <div class="middleTextHeadinAndText">
+            <h2 class="MiddleHeading">Webbutveckling är ovärderligt</h2>
+            <p class="subtitleMiddel">
+              Din webb är ett ovärderligt verktyg för ditt företag och det är
+              viktigt att den blir riktigt bra. Göra ett gott intryck, öka
+              försäljningen och bygga förtroende – din webbplats har mycket att
+              leva upp till!
+            </p>
+          </div>
+          <div class="card-container">
+            <div class="card">
+              <img src="img/trebilder/computer.png" alt="" class="icon" />
+              <h3 class="threeColumHeading">Design</h3>
+              <p class="secondary-text">UX och användaren i fokus</p>
+            </div>
+            <div class="card">
+              <img src="img/trebilder/game-console.png" alt="" class="icon" />
+              <h3 class="threeColumHeading">Logik</h3>
+              <p class="secondary-text">Alltid skräddarsytt</p>
+            </div>
+            <div class="card">
+              <img
+                src="img/trebilder/virtual-reality (1).png"
+                alt=""
+                class="icon"
+              />
+              <h3 class="threeColumHeading">Funktionalitet</h3>
+              <p class="secondary-text">Flexibelt och redigerbart</p>
+            </div>
+          </div>
+        </div>
+
+        <video autoplay muted loop controls class="film" type="video/mp4"
+          <source
+            src="img/movies/production_id_4464847 (1080p).mp4"
+            type="video/mp4"
+          />
+        </video>
+        <div class="smallText">
+          <h2>Vad ska webbplatsen göra för dig?</h2>
+          <p>
+            Från kreativa kampanjsidor till avancerade e-handelsplattformar – vi
+            är redo för det mesta när det kommer till webbutveckling. Vi tar oss
+            an både små och stora projekt och som techbyrå kan vi också lösa det
+            mer tekniskt utmanande.
+          </p>
+          <p>
+            Vi hjälper dig koppla ihop system med varandra och få dem att
+            interagera med hemsidan automatiskt. Oavsett vad ditt mål är kommer
+            vi vägleda dig till bästa sättet att förverkliga din vision. Vi är
+            med hela vägen från första skiss till lansering, och stannar gärna
+            som din långsiktiga partner därefter.
+          </p>
+        </div>
+
+        <div>
+          <img src="img/galleri/R.jpg" alt="">
+        </div>
+        <!-- GRAPHIC GRID SECTION -->
+        <!-- <div class="graphic-section">
+          <div class="section-container">
+            <div class="graphic-grid">
+
+              <img  src="img/galleri/pexels-ali-pazani-2777898.jpg" 
+              style="width: 100%" 
+              id="staket" />
+
+              <img src="img/galleri/avis-brocolis-cheveux-1024x538.jpeg" 
+              style="width: 100%" 
+              id="slack" />
+
+              <img src="img/galleri/images (22).jpg" style="width: 100%" id="house" />
+
+              <img src="img/galleri/happy-hand-balm-salves-for-organic-skincare-of-chapped-cracked-hands.webp" style="width: 100%" 
+              id="door" />
+
+              <img src="img/galleri/laguldstudio4.JPG" 
+              style="width: 100%" 
+              id="dash" />
+            
+            </div>
+          </div>
+        </div> -->
+        <a class="viewGalleryLink" href="#">VIEW GALLERY</a>
+        <img class="logoFooter" src="img/trebilder/usb.png" alt="" />
+
+        <!-- FOOTER -->
+        <footer class="footer">
+          <div class="section-container">
+            <div class="col">
+              <!-- <h3>Redskap</h3> -->
+              <ul>
+                <li><a href="#">HOME</a></li>
+                <li><a href="#">CSS</a></li>
+                <li><a href="#">HTML</a></li>
+              </ul>
+            </div>
+            <div class="col">
+              <!-- <h3>Use Cases</h3> -->
+              <ul>
+                <li><a href="#">JAVA</a></li>
+                <li><a href="#">PHYTON</a></li>
+                <li><a href="#">KONTAKT</a></li>
+              </ul>
+            </div>
+            <div class="col">
+              <!-- <h3>Resources</h3> -->
+              <ul>
+                <li><a href="#">EXEMPEL</a></li>
+                <li><a href="#">TEKNIK</a></li>
+                <li><a href="#">VÄRDEGRUND</a></li>
+              </ul>
+            </div>
+
+            <div class="col">
+              <!-- <input class="enterYourEmailInput" type="text" />
+              <button class="signUpButton">SIGN UP</button> -->
+
+              <div id="search_wrapper">
+                <input
+                  type="text"
+                  id="search_field"
+                  name="search"
+                  placeholder="DIN E-POST ADRESS HÄR"
+                />
+                <button id="search_button">SIGN UP</button>
+              </div>
+
+              <div class="right-side-footer">
+                <a class="textBeforeIconsFooter" href="#">Privacy & Cookies</a>
+                |
+                <a class="textBeforeIconsFooter" href="#"
+                  >Lars Asplund</a
+                >
+                <a class="footerMediaIcons" href=""
+                  ><i
+                    class="fa-brands fa-twitter footerIconedia twittwePaddingLeft"
+                  ></i
+                ></a>
+                <a class="footerMediaIcons" href=""
+                  ><i class="fa-brands fa-facebook-f footerIconedia"></i
+                ></a>
+                <a class="footerMediaIcons" href=""
+                  ><i class="fa-brands fa-pinterest-p footerIconedia"></i
+                ></a>
+                <a class="footerMediaIcons" href=""
+                  ><i class="fa-brands fa-instagram footerIconedia"></i
+                ></a>
+              </div>
+
+              <div class="icon-link">
+                <img src="assets/comment-icon.png" alt="" />
+              </div>
+            </div>
+          </div>
+        </footer>
+      </main>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
