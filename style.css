@@ -18,6 +18,16 @@ body {
   background-color: #eeefec;
 }
 
+#headerbild {
+  height: auto;
+  width: 50vw;
+}
+
+#imagegallerbottom {
+  height: auto;
+  width: 80vw;
+}
+
 .trecirklarunderkarusell {
   padding-top: 20px;
 }
@@ -296,21 +306,25 @@ img {
   padding: var(--spacing-sm) var(--spacing-md) var(--spacing-sm) 0;
 }
 .card .icon {
-  height: 350px;
+  height: 10vw;
   margin: 20px;
 }
 
 .threeColumHeading {
   font-weight: 500;
-  font-size: 30px;
+  font-size: 1.7vw;
   margin-bottom: 20px;
 }
 
+.MiddleContainer {
+  margin-top: 0vw;
+}
+
 .MiddleHeading {
-  font-size: 35px;
+  font-size: 2.5vw;
   font-weight: 600;
   margin-bottom: 25px;
-  margin-top: 50px;
+  margin-top: 2.5vw;
   letter-spacing: 0.12rem;
 }
 
@@ -345,7 +359,7 @@ img {
 }
 
 .smallText h2 {
-  font-size: 25px;
+  font-size: 2.5vw;
   margin-top: 30px;
   margin-bottom: 14px;
 }
