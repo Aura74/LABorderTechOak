@@ -1,127 +1,210 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="LA-Studio — webbutveckling och design i Ljusne. Vi bygger webb som säljer."
+    />
+    <title>LA-Studio — Webbutveckling i Ljusne</title>
+
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png" />
+    <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
+
+    <!-- Sätt tema + effektläge FÖRE första målning (ingen blink vid reload) -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("theme");
+          if (
+            t === "dark" ||
+            (!t && matchMedia("(prefers-color-scheme: dark)").matches)
+          ) {
+            document.documentElement.setAttribute("data-theme", "dark");
+          }
+          var p = localStorage.getItem("laljusne:perfMode");
+          if (p !== "essential" && p !== "balanced" && p !== "cinematic") {
+            p = matchMedia("(prefers-reduced-motion: reduce)").matches
+              ? "essential"
+              : "balanced";
+            document.documentElement.setAttribute("data-perf-auto", "");
+          }
+          document.documentElement.setAttribute("data-perf", p);
+        } catch (e) {
+          document.documentElement.setAttribute("data-perf", "balanced");
+        }
+      })();
+    </script>
+
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Stick+No+Bills:wght@200;300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Stick+No+Bills:wght@200;300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
-    <title>LA-Studio</title>
   </head>
   <body>
-    <div class="container">
-      <!-- nav container -->
-      <nav class="nav-container">
-        <!-- right nav -->
+    <!-- Preloader -->
+    <div class="preloader" id="preloader" aria-hidden="true">
+      <span class="preloader-mark">LA</span>
+    </div>
+
+    <!-- Custom cursor (endast Cinematic, fine pointer) -->
+    <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+    <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+
+    <div class="container" id="top">
+      <!-- nav -->
+      <nav class="nav-container" aria-label="Huvudmeny">
         <ul class="left-side">
-          <a href=""><i class="fa-brands fa-twitter"></i></a>
-          <a href=""><i class="fa-brands fa-facebook-f"></i></a>
-          <a href=""><i class="fa-brands fa-pinterest-p"></i></a>
-          <a href=""><i class="fa-brands fa-instagram"></i></a>
+          <li><a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a></li>
+          <li><a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a></li>
+          <li><a href="#" aria-label="Pinterest"><i class="fa-brands fa-pinterest-p"></i></a></li>
+          <li><a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a></li>
         </ul>
-        <!-- left nav -->
+
         <ul class="right-side">
           <li>
-            <a class="greenLinkText" href=""
+            <a class="greenLinkText" href="#galleri"
               >Inspiration <i class="fa-solid fa-map-pin"></i
             ></a>
           </li>
-          <li><a href="#">Fakta</a></li>
-          <li><a href="#">Exempel</a></li>
-          <li><a href="#">Kontakta migs</a></li>
+          <li><a href="#vad-vi-gor">Fakta</a></li>
+          <li><a href="#portfolio">Exempel</a></li>
+          <li><a href="#kontakt">Kontakta mig</a></li>
           <li>
             <button class="theme-toggle" id="themeToggle" aria-label="Byt tema">
               <i class="fa-solid fa-moon"></i>
+            </button>
+          </li>
+          <li>
+            <button
+              class="hamburger"
+              id="hamburgerBtn"
+              aria-label="Öppna menyn"
+              aria-expanded="false"
+              aria-controls="mobileMenu"
+            >
+              <i class="fa-solid fa-bars"></i>
             </button>
           </li>
         </ul>
       </nav>
 
       <main class="mainContainer">
-        <!-- <h1 class="headHeading">LA-Studio</h1> -->
-        <img id="headerbild" src="img/lagul2b.png" alt="">
-        <ul class="menuDown">
-          <li><a href="#">HTML</a></li>
-          <li><a href="#">CSS</a></li>
-          <li><a href="#">.NET 8</a></li>
-          <li><a href="#">React</a></li>
-          <li><a href="#">JavaScript</a></li>
-          <li><a href="#">Om mig</a></li>
-          <li><a href="#">Galleri</a></li>
-        </ul>
+        <h1 class="sr-only">LA-Studio — webbutveckling i Ljusne</h1>
+        <img
+          id="headerbild"
+          src="img/lagul2b.png"
+          alt="LA Studio"
+          width="1000"
+          height="250"
+        />
 
+        <p class="hero-tagline" data-reveal>
+          Vi bygger webb som <em>säljer</em> — designat och kodat i Ljusne.
+        </p>
 
-        <!-- annan karusell -->
-        <div class="slideshow-container">
-          <div class="mySlides fade">
+        <!-- sektionsnav -->
+        <nav class="menuDown" aria-label="Sektioner">
+          <a href="#tjanster">Tjänster</a>
+          <a href="#om-mig">Om mig</a>
+          <a href="#portfolio">Exempel</a>
+          <a href="galleri.html">Galleri</a>
+          <a href="#kontakt">Kontakt</a>
+        </nav>
+
+        <!-- Karusell -->
+        <section
+          class="slideshow-container"
+          id="portfolio"
+          aria-roledescription="karusell"
+          aria-label="Utvalda projekt"
+        >
+          <div class="mySlides">
             <div class="numbertext">1 / 5</div>
-            <img src="img/karusell/gator1.jpg" style="width: 100%" />
-            <div class="glass"></div>
-
-            <div class="text">HEMSIDA 1</div>
-            <a class="buttonInPicture overlay" href="http://"
-              >Klicka här för se hemsidan</a
-            >
+            <img src="img/karusell/gator1.jpg" alt="Aurora Studio — projekt" />
+            <div class="slide-content">
+              <p class="slide-eyebrow">Projekt 01 · Kreativ byrå</p>
+              <p class="slide-title">Aurora Studio</p>
+              <p class="slide-desc">Portfolio med mörkt läge &amp; filmisk scroll</p>
+              <a class="buttonInPicture" href="#">Se projektet</a>
+            </div>
           </div>
 
-          <div class="mySlides fade">
+          <div class="mySlides">
             <div class="numbertext">2 / 5</div>
-            <img src="img/karusell/kontortomt1.jpg" style="width: 100%" />
-            <div class="text">HEMSIDA 2</div>
-            <a class="buttonInPicture overlay" href="http://"
-              >Klicka här för se hemsidan</a
-            >
+            <img src="img/karusell/kontortomt1.jpg" alt="Nordvik Interiör — projekt" />
+            <div class="slide-content">
+              <p class="slide-eyebrow">Projekt 02 · E-handel</p>
+              <p class="slide-title">Nordvik Interiör</p>
+              <p class="slide-desc">Butik med varukorg, önskelista &amp; Stripe</p>
+              <a class="buttonInPicture" href="#">Se projektet</a>
+            </div>
           </div>
 
-          <div class="mySlides fade">
+          <div class="mySlides">
             <div class="numbertext">3 / 5</div>
-            <img src="img/karusell/guldator1.jpg" style="width: 100%" />
-            <div class="text">HEMSIDA 4</div>
-            <a class="buttonInPicture overlay" href="http://"
-              >Klicka här för se hemsidan</a
-            >
+            <img src="img/karusell/guldator1.jpg" alt="Ljusne Larm — projekt" />
+            <div class="slide-content">
+              <p class="slide-eyebrow">Projekt 03 · Säkerhet</p>
+              <p class="slide-title">Ljusne Larm</p>
+              <p class="slide-desc">Bokning &amp; kundportal för larmbolag</p>
+              <a class="buttonInPicture" href="#">Se projektet</a>
+            </div>
           </div>
 
-          <div class="mySlides fade">
+          <div class="mySlides">
             <div class="numbertext">4 / 5</div>
-            <img src="img/karusell/guldator2.jpg" style="width: 100%" />
-            <div class="text">HEMSIDA 4</div>
-            <a class="buttonInPicture overlay" href="http://"
-              >Klicka här för se hemsidan</a
-            >
+            <img src="img/karusell/guldator2.jpg" alt="Fjärdens Fastigheter — projekt" />
+            <div class="slide-content">
+              <p class="slide-eyebrow">Projekt 04 · Fastigheter</p>
+              <p class="slide-title">Fjärdens Fastigheter</p>
+              <p class="slide-desc">Objektsportal med kartsök &amp; filter</p>
+              <a class="buttonInPicture" href="#">Se projektet</a>
+            </div>
           </div>
 
-          <div class="mySlides fade">
+          <div class="mySlides">
             <div class="numbertext">5 / 5</div>
-            <img src="img/karusell/storm1.jpg" style="width: 100%" />
-            <div class="text glass">HEMSIDA 5</div>
-            <a class="buttonInPicture overlay" href="http://"
-              >Klicka här för se hemsidan</a
-            >
+            <img src="img/karusell/storm1.jpg" alt="Kustväder — projekt" />
+            <div class="slide-content">
+              <p class="slide-eyebrow">Projekt 05 · Dashboard</p>
+              <p class="slide-title">Kustväder</p>
+              <p class="slide-desc">Väderpanel i realtid med öppet API</p>
+              <a class="buttonInPicture" href="#">Se projektet</a>
+            </div>
           </div>
-        </div>
-        <br />
 
-        <div class="trecirklarunderkarusell">
-          <span class="dot"></span>
-          <span class="dot"></span>
-          <span class="dot"></span>
-          <span class="dot"></span>
-          <span class="dot"></span>
+          <button class="slide-arrow slide-prev" id="slidePrev" aria-label="Föregående bild">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <button class="slide-arrow slide-next" id="slideNext" aria-label="Nästa bild">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </section>
+
+        <div class="trecirklarunderkarusell" role="tablist" aria-label="Välj bild">
+          <button class="dot" aria-label="Visa bild 1"></button>
+          <button class="dot" aria-label="Visa bild 2"></button>
+          <button class="dot" aria-label="Visa bild 3"></button>
+          <button class="dot" aria-label="Visa bild 4"></button>
+          <button class="dot" aria-label="Visa bild 5"></button>
         </div>
 
-        <div class="MiddleContainer">
-          <div class="middleTextHeadinAndText">
-            <h2 class="MiddleHeading">Webbutveckling är ovärderligt</h2>
+        <section class="MiddleContainer" id="vad-vi-gor">
+          <div class="middleTextHeadinAndText" data-reveal>
+            <p class="eyebrow">Vad vi gör</p>
+            <h2 class="MiddleHeading split-text" data-split>
+              Webbutveckling är ovärderligt
+            </h2>
             <p class="subtitleMiddel">
               Din webb är ett ovärderligt verktyg för ditt företag och det är
               viktigt att den blir riktigt bra. Göra ett gott intryck, öka
@@ -131,45 +214,72 @@
           </div>
 
           <div class="card-container">
-            <div class="card">
-              <img src="img/trebilder/computer.png" alt="" class="icon" />
+            <div class="card" data-reveal>
+              <i class="icon" data-lucide="pen-tool" stroke-width="1.5"></i>
               <h3 class="threeColumHeading">Design</h3>
               <p class="secondary-text">UX i fokus</p>
             </div>
-
-            <div class="card">
-              <img src="img/trebilder/game-console.png" alt="" class="icon" />
+            <div class="card" data-reveal>
+              <i class="icon" data-lucide="braces" stroke-width="1.5"></i>
               <h3 class="threeColumHeading">Logik</h3>
               <p class="secondary-text">Skräddarsytt</p>
             </div>
-
-            <div class="card">
-              <img src="img/trebilder/technologyyy.png" alt="" class="icon" />
+            <div class="card" data-reveal>
+              <i class="icon" data-lucide="cpu" stroke-width="1.5"></i>
               <h3 class="threeColumHeading">Teknik</h3>
-              <p class="secondary-text">Teknik</p>
+              <p class="secondary-text">Modern stack</p>
             </div>
-
-            <div class="card">
-              <img
-                src="img/trebilder/virtual-reality (1).png"
-                alt=""
-                class="icon"
-              />
+            <div class="card" data-reveal>
+              <i class="icon" data-lucide="puzzle" stroke-width="1.5"></i>
               <h3 class="threeColumHeading">Funktion</h3>
               <p class="secondary-text">Flexibelt</p>
             </div>
-
           </div>
-        </div>
+        </section>
 
-        <video autoplay muted loop controls class="film" type="video/mp4"
+        <!-- Teknik-marquee -->
+        <section class="tech-marquee" aria-label="Teknik vi jobbar med">
+          <div class="marquee-track">
+            <span class="marquee-item"><i class="fa-brands fa-html5"></i>HTML5</span>
+            <span class="marquee-item"><i class="fa-brands fa-css3-alt"></i>CSS3</span>
+            <span class="marquee-item"><i class="fa-brands fa-js"></i>JavaScript</span>
+            <span class="marquee-item"><i class="fa-brands fa-react"></i>React</span>
+            <span class="marquee-item"><i class="fa-brands fa-microsoft"></i>.NET 8</span>
+            <span class="marquee-item"><i class="fa-brands fa-node-js"></i>Node.js</span>
+            <span class="marquee-item"><i class="fa-brands fa-python"></i>Python</span>
+            <span class="marquee-item"><i class="fa-brands fa-sass"></i>Sass</span>
+            <span class="marquee-item"><i class="fa-brands fa-git-alt"></i>Git</span>
+            <span class="marquee-item"><i class="fa-brands fa-figma"></i>Figma</span>
+            <span class="marquee-item" aria-hidden="true"><i class="fa-brands fa-html5"></i>HTML5</span>
+            <span class="marquee-item" aria-hidden="true"><i class="fa-brands fa-css3-alt"></i>CSS3</span>
+            <span class="marquee-item" aria-hidden="true"><i class="fa-brands fa-js"></i>JavaScript</span>
+            <span class="marquee-item" aria-hidden="true"><i class="fa-brands fa-react"></i>React</span>
+            <span class="marquee-item" aria-hidden="true"><i class="fa-brands fa-microsoft"></i>.NET 8</span>
+            <span class="marquee-item" aria-hidden="true"><i class="fa-brands fa-node-js"></i>Node.js</span>
+            <span class="marquee-item" aria-hidden="true"><i class="fa-brands fa-python"></i>Python</span>
+            <span class="marquee-item" aria-hidden="true"><i class="fa-brands fa-sass"></i>Sass</span>
+            <span class="marquee-item" aria-hidden="true"><i class="fa-brands fa-git-alt"></i>Git</span>
+            <span class="marquee-item" aria-hidden="true"><i class="fa-brands fa-figma"></i>Figma</span>
+          </div>
+        </section>
+
+        <video
+          class="film"
+          id="heroFilm"
+          muted
+          loop
+          playsinline
+          preload="metadata"
+        >
           <source
             src="img/movies/production_id_4464847 (1080p).mp4"
             type="video/mp4"
           />
         </video>
-        <div class="smallText">
-          <h2>Vad ska webbplatsen göra för dig?</h2>
+
+        <section class="smallText" id="tjanster" data-reveal>
+          <p class="eyebrow">Tjänster</p>
+          <h2 class="split-text" data-split>Vad ska webbplatsen göra för dig?</h2>
           <p>
             Från kreativa kampanjsidor till avancerade e-handelsplattformar – vi
             är redo för det mesta när det kommer till webbutveckling. Vi tar oss
@@ -183,132 +293,294 @@
             med hela vägen från första skiss till lansering, och stannar gärna
             som din långsiktiga partner därefter.
           </p>
-        </div>
+        </section>
+
+        <!-- Statistik -->
+        <section class="stats-section" aria-label="I siffror">
+          <div class="stat" data-reveal>
+            <span class="stat-number" data-count="120" data-suffix="+">0</span>
+            <p class="stat-label">Projekt levererade</p>
+          </div>
+          <div class="stat" data-reveal>
+            <span class="stat-number" data-count="12" data-suffix=" år">0</span>
+            <p class="stat-label">I branschen</p>
+          </div>
+          <div class="stat" data-reveal>
+            <span class="stat-number" data-count="100" data-suffix="%">0</span>
+            <p class="stat-label">Nöjda kunder</p>
+          </div>
+          <div class="stat" data-reveal>
+            <span class="stat-number" data-count="24" data-suffix="h">0</span>
+            <p class="stat-label">Svarstid</p>
+          </div>
+        </section>
+
+        <!-- Om mig -->
+        <section class="about-section" id="om-mig">
+          <!-- Porträtt: img/lars.jpg (nerladdat från Lars Cloudinary 2026-07-09).
+               Olivgradienten under fungerar som fallback om bilden inte laddar. -->
+          <div class="about-portrait" data-reveal>
+            <img
+              src="img/lars.jpg"
+              alt="Lars Asplund, grundare av LA-Studio"
+              loading="lazy"
+            />
+          </div>
+          <div class="about-text" data-reveal>
+            <p class="eyebrow">Om mig</p>
+            <h2 class="about-heading split-text" data-split>Namnet bakom LA-Studio</h2>
+            <p>
+              Jag heter Lars Asplund och har byggt webb i över ett decennium —
+              från små kampanjsidor till system som pratar med varandra bakom
+              kulisserna. LA-Studio är mitt sätt att förena hantverk och teknik:
+              sidor som är lika genomtänkta i koden som de är vackra på skärmen.
+            </p>
+            <p>
+              Jag jobbar nära dig genom hela resan, från första skiss till
+              lansering, och förklarar alltid tekniken i klartext. Målet är
+              enkelt: en webbplats du är stolt över och som faktiskt gör jobbet.
+            </p>
+            <p class="about-sign">— Lars Asplund, grundare</p>
+          </div>
+        </section>
 
         <!-- Fotovägg -->
-        <div class="photo-wall">
-          <div class="photo-wall-item pw-left1">
-            <img src="img/karusell/gator1.jpg" alt="Projekt 1">
-          </div>
-          <div class="photo-wall-item pw-left2">
-            <img src="img/karusell/kontortomt1.jpg" alt="Projekt 2">
-          </div>
-          <div class="photo-wall-item pw-left3">
-            <img src="img/karusell/guldator1.jpg" alt="Projekt 3">
-          </div>
-          <div class="photo-wall-item pw-big">
-            <img src="img/karusell/guldator2.jpg" alt="Projekt 4">
-          </div>
-          <div class="photo-wall-item pw-ljusne">
-            <span>LJUSNE</span>
-          </div>
-          <div class="photo-wall-item pw-bot1">
-            <img src="img/karusell/storm1.jpg" alt="Projekt 5">
-          </div>
-          <div class="photo-wall-item pw-bot2">
-            <img src="img/karusell/gator1.jpg" alt="Projekt 6">
-          </div>
-        </div>
-        <!-- GRAPHIC GRID SECTION -->
-        <!-- <div class="graphic-section">
-          <div class="section-container">
-            <div class="graphic-grid">
-
-              <img  src="img/galleri/pexels-ali-pazani-2777898.jpg" 
-              style="width: 100%" 
-              id="staket" />
-
-              <img src="img/galleri/avis-brocolis-cheveux-1024x538.jpeg" 
-              style="width: 100%" 
-              id="slack" />
-
-              <img src="img/galleri/images (22).jpg" style="width: 100%" id="house" />
-
-              <img src="img/galleri/happy-hand-balm-salves-for-organic-skincare-of-chapped-cracked-hands.webp" style="width: 100%" 
-              id="door" />
-
-              <img src="img/galleri/laguldstudio4.JPG" 
-              style="width: 100%" 
-              id="dash" />
-            
+        <section id="galleri" class="galleri-section">
+          <p class="eyebrow" data-reveal>Portfolio</p>
+          <div class="photo-wall">
+            <button class="photo-wall-item pw-left1 lightbox-trigger" data-reveal data-caption="Aurora Studio — kreativ byrå">
+              <img src="img/karusell/gator1.jpg" alt="Aurora Studio" loading="lazy" />
+            </button>
+            <button class="photo-wall-item pw-left2 lightbox-trigger" data-reveal data-caption="Nordvik Interiör — e-handel">
+              <img src="img/karusell/kontortomt1.jpg" alt="Nordvik Interiör" loading="lazy" />
+            </button>
+            <button class="photo-wall-item pw-left3 lightbox-trigger" data-reveal data-caption="Ljusne Larm — säkerhet">
+              <img src="img/karusell/guldator1.jpg" alt="Ljusne Larm" loading="lazy" />
+            </button>
+            <button class="photo-wall-item pw-big lightbox-trigger" data-reveal data-caption="Fjärdens Fastigheter — objektsportal">
+              <img src="img/karusell/guldator2.jpg" alt="Fjärdens Fastigheter" loading="lazy" />
+            </button>
+            <div class="photo-wall-item pw-ljusne" data-reveal>
+              <span>LJUSNE</span>
             </div>
+            <button class="photo-wall-item pw-bot1 lightbox-trigger" data-reveal data-caption="Kustväder — dashboard">
+              <img src="img/karusell/storm1.jpg" alt="Kustväder" loading="lazy" />
+            </button>
+            <button class="photo-wall-item pw-bot2 lightbox-trigger" data-reveal data-caption="Aurora Studio — kampanjsida">
+              <img src="img/karusell/gator1.jpg" alt="Aurora Studio kampanj" loading="lazy" />
+            </button>
           </div>
-        </div> -->
-        <a class="viewGalleryLink" href="#">VIEW GALLERY</a>
-        <img class="logoFooter" src="img/trebilder/usb.png" alt="" />
+          <a class="viewGalleryLink" href="galleri.html">SE HELA GALLERIET</a>
+        </section>
 
-        <!-- FOOTER -->
-        <footer class="footer">
-          <div class="section-container">
-            <div class="col">
-              <!-- <h3>Redskap</h3> -->
-              <ul>
-                <li><a href="#">HOME</a></li>
-                <li><a href="#">CSS</a></li>
-                <li><a href="#">HTML</a></li>
-              </ul>
-            </div>
-            <div class="col">
-              <!-- <h3>Use Cases</h3> -->
-              <ul>
-                <li><a href="#">JAVA</a></li>
-                <li><a href="#">PHYTON</a></li>
-                <li><a href="#">KONTAKT</a></li>
-              </ul>
-            </div>
-            <div class="col">
-              <!-- <h3>Resources</h3> -->
-              <ul>
-                <li><a href="#">EXEMPEL</a></li>
-                <li><a href="#">TEKNIK</a></li>
-                <li><a href="#">VÄRDEGRUND</a></li>
-              </ul>
-            </div>
+        <!-- Omdömen (demo — live via Trustpilot/Yotpo) -->
+        <section class="testimonials" id="omdomen">
+          <p class="eyebrow" data-reveal>Omdömen</p>
+          <h2 class="testimonials-heading split-text" data-split>Vad kunder säger</h2>
+          <div class="testimonial-grid">
+            <blockquote class="testimonial" data-reveal>
+              <p class="testimonial-quote">
+                Lars förstod exakt vad vi ville ha och levererade en sida som
+                överträffade allt. Bokningarna ökade direkt.
+              </p>
+              <footer class="testimonial-author">
+                <span class="t-name">Anna Lindqvist</span>
+                <span class="t-role">Nordvik Interiör</span>
+              </footer>
+            </blockquote>
+            <blockquote class="testimonial" data-reveal>
+              <p class="testimonial-quote">
+                Proffsigt från första mötet. Snabb, tydlig och tekniskt vass —
+                sällan man hittar allt i samma person.
+              </p>
+              <footer class="testimonial-author">
+                <span class="t-name">Erik Sundberg</span>
+                <span class="t-role">Ljusne Larm</span>
+              </footer>
+            </blockquote>
+            <blockquote class="testimonial" data-reveal>
+              <p class="testimonial-quote">
+                Vår nya sida känns dyr och genomtänkt. Kunderna kommenterar den
+                nästan varje vecka.
+              </p>
+              <footer class="testimonial-author">
+                <span class="t-name">Maria Holm</span>
+                <span class="t-role">Fjärdens Fastigheter</span>
+              </footer>
+            </blockquote>
+          </div>
+        </section>
 
-            <div class="col">
-              <!-- <input class="enterYourEmailInput" type="text" />
-              <button class="signUpButton">SIGN UP</button> -->
-
-              <div id="search_wrapper">
-                <input
-                  type="text"
-                  id="search_field"
-                  name="search"
-                  placeholder="DIN E-POST ADRESS HÄR"
-                />
-                <button id="search_button">SIGN UP</button>
+        <!-- Kontakt -->
+        <section class="contact-section" id="kontakt" data-reveal>
+          <p class="eyebrow">Kontakt</p>
+          <h2 class="split-text" data-split>Berätta om ditt projekt</h2>
+          <p class="contact-lead">
+            Skriv några rader om vad du vill bygga så hör jag av mig inom ett
+            dygn.
+          </p>
+          <form class="contact-form" id="contactForm" novalidate>
+            <div class="field-row">
+              <div class="field">
+                <label for="cf_name">Namn</label>
+                <input type="text" id="cf_name" name="name" autocomplete="name" required />
               </div>
-
-              <div class="right-side-footer">
-                <a class="textBeforeIconsFooter" href="#">Privacy & Cookies</a>
-                |
-                <a class="textBeforeIconsFooter" href="#"
-                  >Lars Asplund</a
-                >
-                <a class="footerMediaIcons" href=""
-                  ><i
-                    class="fa-brands fa-twitter footerIconedia twittwePaddingLeft"
-                  ></i
-                ></a>
-                <a class="footerMediaIcons" href=""
-                  ><i class="fa-brands fa-facebook-f footerIconedia"></i
-                ></a>
-                <a class="footerMediaIcons" href=""
-                  ><i class="fa-brands fa-pinterest-p footerIconedia"></i
-                ></a>
-                <a class="footerMediaIcons" href=""
-                  ><i class="fa-brands fa-instagram footerIconedia"></i
-                ></a>
-              </div>
-
-              <div class="icon-link">
-                <img src="assets/comment-icon.png" alt="" />
+              <div class="field">
+                <label for="cf_email">E-post</label>
+                <input type="email" id="cf_email" name="email" autocomplete="email" required />
               </div>
             </div>
-          </div>
-        </footer>
+            <div class="field">
+              <label for="cf_msg">Meddelande</label>
+              <textarea id="cf_msg" name="message" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="contact-submit">Skicka</button>
+          </form>
+        </section>
       </main>
     </div>
-    <script src="app.js"></script>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-cta">
+          <p class="eyebrow">Redo att börja?</p>
+          <h2 class="footer-cta-title">Ditt nästa projekt börjar här</h2>
+          <a href="#kontakt" class="footer-cta-btn">Starta ett projekt</a>
+        </div>
+
+        <div class="footer-main">
+          <div class="footer-brand">
+            <img src="img/lagul2b.png" alt="LA Studio" class="footer-logo" loading="lazy" />
+            <p>Webbutveckling &amp; design från Ljusne, Sverige.</p>
+            <div class="footer-social">
+              <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+              <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+              <a href="#" aria-label="Pinterest"><i class="fa-brands fa-pinterest-p"></i></a>
+              <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+          </div>
+
+          <nav class="footer-col" aria-label="Meny">
+            <h4>Meny</h4>
+            <ul>
+              <li><a href="#top">Hem</a></li>
+              <li><a href="#tjanster">Tjänster</a></li>
+              <li><a href="#om-mig">Om mig</a></li>
+              <li><a href="galleri.html">Galleri</a></li>
+              <li><a href="#kontakt">Kontakt</a></li>
+            </ul>
+          </nav>
+
+          <div class="footer-col">
+            <h4>Tjänster</h4>
+            <ul>
+              <li><a href="#tjanster">Webbdesign</a></li>
+              <li><a href="#tjanster">Webbutveckling</a></li>
+              <li><a href="#tjanster">E-handel</a></li>
+              <li><a href="#tjanster">Support &amp; drift</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col footer-col-news">
+            <h4>Nyhetsbrev</h4>
+            <p class="footer-news-lead">Tips om webb &amp; design, då och då.</p>
+            <form id="newsletterForm" novalidate>
+              <label class="sr-only" for="newsletter_field">Din e-postadress</label>
+              <div id="search_wrapper">
+                <input
+                  type="email"
+                  id="newsletter_field"
+                  name="email"
+                  placeholder="DIN E-POSTADRESS"
+                  autocomplete="email"
+                  required
+                />
+                <button id="newsletter_button" type="submit">OK</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span>© 2026 LA-Studio</span>
+          <a href="#">Integritet &amp; cookies</a>
+          <span>Byggd med omsorg i Ljusne</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Mobilmeny -->
+    <div class="menu-backdrop" id="menuBackdrop" hidden></div>
+    <aside class="mobile-menu" id="mobileMenu" aria-hidden="true" aria-label="Mobilmeny">
+      <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Stäng menyn">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <nav class="mobile-menu-links">
+        <a href="#tjanster">Tjänster</a>
+        <a href="#om-mig">Om mig</a>
+        <a href="#portfolio">Exempel</a>
+        <a href="galleri.html">Galleri</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
+      <div class="mobile-menu-social">
+        <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#" aria-label="Pinterest"><i class="fa-brands fa-pinterest-p"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      </div>
+    </aside>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" hidden aria-hidden="true" role="dialog" aria-label="Bildvisning">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Stäng">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Föregående">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <figure class="lightbox-figure">
+        <img class="lightbox-img" id="lightboxImg" src="" alt="" />
+        <figcaption class="lightbox-caption" id="lightboxCaption"></figcaption>
+      </figure>
+      <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Nästa">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Effektväljare -->
+    <div class="perf-widget">
+      <button
+        class="perf-toggle"
+        id="perfToggle"
+        aria-label="Effektläge"
+        aria-expanded="false"
+        aria-controls="perfPopover"
+      >
+        <i class="fa-solid fa-sliders"></i>
+      </button>
+      <div class="perf-popover" id="perfPopover" hidden>
+        <p class="perf-popover-title">Effektläge</p>
+        <button class="perf-option" data-perf-option="essential">
+          <span class="perf-option-name">Essential</span>
+          <span class="perf-option-desc">Nästan inga effekter — snabbast</span>
+        </button>
+        <button class="perf-option" data-perf-option="balanced">
+          <span class="perf-option-name">Balanced</span>
+          <span class="perf-option-desc">Mjuka övergångar, låg belastning</span>
+        </button>
+        <button class="perf-option" data-perf-option="cinematic">
+          <span class="perf-option-name">Cinematic</span>
+          <span class="perf-option-desc">Alla effekter — kräver bra dator</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js" defer></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <script src="app.js" defer></script>
   </body>
 </html>

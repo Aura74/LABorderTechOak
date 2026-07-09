@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="LA-Studio galleri — utvalda webbprojekt från Ljusne." />
+    <title>Galleri — LA-Studio</title>
+
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png" />
+    <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
+
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("theme");
+          if (
+            t === "dark" ||
+            (!t && matchMedia("(prefers-color-scheme: dark)").matches)
+          ) {
+            document.documentElement.setAttribute("data-theme", "dark");
+          }
+          var p = localStorage.getItem("laljusne:perfMode");
+          if (p !== "essential" && p !== "balanced" && p !== "cinematic") {
+            p = matchMedia("(prefers-reduced-motion: reduce)").matches
+              ? "essential"
+              : "balanced";
+            document.documentElement.setAttribute("data-perf-auto", "");
+          }
+          document.documentElement.setAttribute("data-perf", p);
+        } catch (e) {
+          document.documentElement.setAttribute("data-perf", "balanced");
+        }
+      })();
+    </script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Stick+No+Bills:wght@200;300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="preloader" id="preloader" aria-hidden="true">
+      <span class="preloader-mark">LA</span>
+    </div>
+    <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+    <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+
+    <div class="container">
+      <nav class="nav-container" aria-label="Huvudmeny">
+        <ul class="left-side">
+          <li><a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a></li>
+          <li><a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a></li>
+          <li><a href="#" aria-label="Pinterest"><i class="fa-brands fa-pinterest-p"></i></a></li>
+          <li><a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a></li>
+        </ul>
+
+        <ul class="right-side">
+          <li><a class="greenLinkText" href="index.html">Hem <i class="fa-solid fa-house"></i></a></li>
+          <li><a href="index.html#vad-vi-gor">Fakta</a></li>
+          <li><a href="index.html#portfolio">Exempel</a></li>
+          <li><a href="index.html#kontakt">Kontakta mig</a></li>
+          <li>
+            <button class="theme-toggle" id="themeToggle" aria-label="Byt tema">
+              <i class="fa-solid fa-moon"></i>
+            </button>
+          </li>
+          <li>
+            <button
+              class="hamburger"
+              id="hamburgerBtn"
+              aria-label="Öppna menyn"
+              aria-expanded="false"
+              aria-controls="mobileMenu"
+            >
+              <i class="fa-solid fa-bars"></i>
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <main class="mainContainer gallery-page">
+        <a href="index.html" aria-label="Till startsidan">
+          <img
+            id="headerbild"
+            src="img/lagul2b.png"
+            alt="LA Studio"
+            width="1000"
+            height="250"
+          />
+        </a>
+
+        <header class="gallery-head" data-reveal>
+          <p class="eyebrow">Portfolio</p>
+          <h1 class="split-text" data-split>Galleri</h1>
+        </header>
+
+        <div class="gallery-filters" role="group" aria-label="Filtrera galleri">
+          <button class="filter-btn is-active" data-filter="all">Alla</button>
+          <button class="filter-btn" data-filter="kreativt">Kreativt</button>
+          <button class="filter-btn" data-filter="teknik">Teknik</button>
+          <button class="filter-btn" data-filter="miljo">Miljö</button>
+        </div>
+
+        <div class="gallery-grid">
+          <button class="gallery-cell lightbox-trigger" data-cat="kreativt" data-caption="Aurora Studio — hero">
+            <img src="img/karusell/gator1.jpg" alt="Aurora Studio hero" loading="lazy" />
+          </button>
+          <button class="gallery-cell lightbox-trigger" data-cat="teknik" data-caption="Fjärdens Fastigheter — objektsportal">
+            <img src="img/karusell/guldator2.jpg" alt="Fjärdens Fastigheter portal" loading="lazy" />
+          </button>
+          <button class="gallery-cell lightbox-trigger" data-cat="miljo" data-caption="Nordvik Interiör — arbetsyta">
+            <img src="img/karusell/kontortomt1.jpg" alt="Nordvik Interiör arbetsyta" loading="lazy" />
+          </button>
+          <button class="gallery-cell lightbox-trigger" data-cat="teknik" data-caption="Ljusne Larm — dashboard">
+            <img src="img/karusell/guldator1.jpg" alt="Ljusne Larm dashboard" loading="lazy" />
+          </button>
+          <button class="gallery-cell lightbox-trigger" data-cat="miljo" data-caption="Kustväder — panel">
+            <img src="img/karusell/storm1.jpg" alt="Kustväder panel" loading="lazy" />
+          </button>
+          <button class="gallery-cell lightbox-trigger" data-cat="kreativt" data-caption="Aurora Studio — kampanjsida">
+            <img src="img/karusell/gator1.jpg" alt="Aurora Studio kampanj" loading="lazy" />
+          </button>
+          <button class="gallery-cell lightbox-trigger" data-cat="teknik" data-caption="Systemintegration & API">
+            <img src="img/karusell/guldator2.jpg" alt="Systemintegration" loading="lazy" />
+          </button>
+          <button class="gallery-cell lightbox-trigger" data-cat="miljo" data-caption="Studio i Ljusne">
+            <img src="img/karusell/kontortomt1.jpg" alt="Studio i Ljusne" loading="lazy" />
+          </button>
+          <button class="gallery-cell lightbox-trigger" data-cat="miljo" data-caption="Väderdata i realtid">
+            <img src="img/karusell/storm1.jpg" alt="Väderdata" loading="lazy" />
+          </button>
+          <button class="gallery-cell lightbox-trigger" data-cat="teknik" data-caption="Kundportal & inloggning">
+            <img src="img/karusell/guldator1.jpg" alt="Kundportal" loading="lazy" />
+          </button>
+          <button class="gallery-cell lightbox-trigger" data-cat="kreativt" data-caption="Varumärke & UX">
+            <img src="img/karusell/gator1.jpg" alt="Varumärke och UX" loading="lazy" />
+          </button>
+          <button class="gallery-cell lightbox-trigger" data-cat="miljo" data-caption="Prototyp & skiss">
+            <img src="img/karusell/kontortomt1.jpg" alt="Prototyp och skiss" loading="lazy" />
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-cta">
+          <p class="eyebrow">Redo att börja?</p>
+          <h2 class="footer-cta-title">Ditt nästa projekt börjar här</h2>
+          <a href="index.html#kontakt" class="footer-cta-btn">Starta ett projekt</a>
+        </div>
+
+        <div class="footer-main">
+          <div class="footer-brand">
+            <img src="img/lagul2b.png" alt="LA Studio" class="footer-logo" loading="lazy" />
+            <p>Webbutveckling &amp; design från Ljusne, Sverige.</p>
+            <div class="footer-social">
+              <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+              <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+              <a href="#" aria-label="Pinterest"><i class="fa-brands fa-pinterest-p"></i></a>
+              <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+          </div>
+
+          <nav class="footer-col" aria-label="Meny">
+            <h4>Meny</h4>
+            <ul>
+              <li><a href="index.html">Hem</a></li>
+              <li><a href="index.html#tjanster">Tjänster</a></li>
+              <li><a href="index.html#om-mig">Om mig</a></li>
+              <li><a href="galleri.html">Galleri</a></li>
+              <li><a href="index.html#kontakt">Kontakt</a></li>
+            </ul>
+          </nav>
+
+          <div class="footer-col">
+            <h4>Tjänster</h4>
+            <ul>
+              <li><a href="index.html#tjanster">Webbdesign</a></li>
+              <li><a href="index.html#tjanster">Webbutveckling</a></li>
+              <li><a href="index.html#tjanster">E-handel</a></li>
+              <li><a href="index.html#tjanster">Support &amp; drift</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col footer-col-news">
+            <h4>Nyhetsbrev</h4>
+            <p class="footer-news-lead">Tips om webb &amp; design, då och då.</p>
+            <form id="newsletterForm" novalidate>
+              <label class="sr-only" for="newsletter_field">Din e-postadress</label>
+              <div id="search_wrapper">
+                <input
+                  type="email"
+                  id="newsletter_field"
+                  name="email"
+                  placeholder="DIN E-POSTADRESS"
+                  autocomplete="email"
+                  required
+                />
+                <button id="newsletter_button" type="submit">OK</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span>© 2026 LA-Studio</span>
+          <a href="#">Integritet &amp; cookies</a>
+          <span>Byggd med omsorg i Ljusne</span>
+        </div>
+      </div>
+    </footer>
+
+    <div class="menu-backdrop" id="menuBackdrop" hidden></div>
+    <aside class="mobile-menu" id="mobileMenu" aria-hidden="true" aria-label="Mobilmeny">
+      <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Stäng menyn">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <nav class="mobile-menu-links">
+        <a href="index.html">Hem</a>
+        <a href="index.html#tjanster">Tjänster</a>
+        <a href="index.html#om-mig">Om mig</a>
+        <a href="galleri.html">Galleri</a>
+        <a href="index.html#kontakt">Kontakt</a>
+      </nav>
+      <div class="mobile-menu-social">
+        <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#" aria-label="Pinterest"><i class="fa-brands fa-pinterest-p"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      </div>
+    </aside>
+
+    <div class="lightbox" id="lightbox" hidden aria-hidden="true" role="dialog" aria-label="Bildvisning">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Stäng">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Föregående">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <figure class="lightbox-figure">
+        <img class="lightbox-img" id="lightboxImg" src="" alt="" />
+        <figcaption class="lightbox-caption" id="lightboxCaption"></figcaption>
+      </figure>
+      <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Nästa">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <div class="perf-widget">
+      <button
+        class="perf-toggle"
+        id="perfToggle"
+        aria-label="Effektläge"
+        aria-expanded="false"
+        aria-controls="perfPopover"
+      >
+        <i class="fa-solid fa-sliders"></i>
+      </button>
+      <div class="perf-popover" id="perfPopover" hidden>
+        <p class="perf-popover-title">Effektläge</p>
+        <button class="perf-option" data-perf-option="essential">
+          <span class="perf-option-name">Essential</span>
+          <span class="perf-option-desc">Nästan inga effekter — snabbast</span>
+        </button>
+        <button class="perf-option" data-perf-option="balanced">
+          <span class="perf-option-name">Balanced</span>
+          <span class="perf-option-desc">Mjuka övergångar, låg belastning</span>
+        </button>
+        <button class="perf-option" data-perf-option="cinematic">
+          <span class="perf-option-name">Cinematic</span>
+          <span class="perf-option-desc">Alla effekter — kräver bra dator</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js" defer></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <script src="app.js" defer></script>
+  </body>
+</html>
