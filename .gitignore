@@ -1,0 +1,7 @@
+# API-nycklar får aldrig committas — Google spärrar nycklar
+# som upptäcks i publika GitHub-repon (hände 2026-07-08).
+js/apikey.js
+
+# OS/editor
+.DS_Store
+Thumbs.db

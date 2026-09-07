@@ -1,6 +1,6 @@
 # LA-Studio — Ljusne
 
-Portfolio-/studiosida för webbutveckling (demo, ingen backend). Vanilla HTML/CSS/JS — inga ramverk, inga byggverktyg. Två sidor: startsida (`index.html`) + gallerisida (`galleri.html`), som delar `style.css` och `app.js`.
+Portfolio-/studiosida för webbutveckling (demo, ingen backend). Vanilla HTML/CSS/JS — inga ramverk, inga byggverktyg. Två sidor: startsida (`index.html`) + gallerisida (`galleri.html`) som delar stilmallar och skript.
 
 ## Tech Stack
 
@@ -8,88 +8,118 @@ Portfolio-/studiosida för webbutveckling (demo, ingen backend). Vanilla HTML/CS
 |---|---|---|
 | Typsnitt (rubriker) | Cormorant Garamond | Serif-display — editorial premiumkänsla |
 | Typsnitt (text/UI) | Courier Prime | Monospace — behåller den techiga identiteten |
-| Accent-font | Stick No Bills | Bara LJUSNE-baren |
-| Ikoner (UI) | Font Awesome 6.5.1 | CDN — sociala ikoner, pilar, marquee-loggor |
-| Ikoner (kort) | Lucide | CDN — `pen-tool`, `braces`, `cpu`, `puzzle` i oliv |
-| Mjukscroll | Lenis 1.1.14 | CDN, initieras **endast** i effektläget Cinematic |
-| Allt annat | Vanilla JS | Karusell, lightbox, filter, reveals, split-text, count-up, cursor, preloader, sidövergång |
+| Accent-font | Stick No Bills 700 | Bara LJUSNE-baren |
+| Ikoner (UI) | Font Awesome 6.7.2 | cdnjs — sociala ikoner, pilar, marquee-loggor |
+| Ikoner (kort) | Lucide 0.469.0 | jsDelivr (pinnad version) — `pen-tool`, `braces`, `cpu`, `puzzle` |
+| Mjukscroll | Lenis 1.1.14 | jsDelivr, initieras **endast** i effektläget Cinematic |
+| AI-chatt | Gemini API | `gemini-flash-lite-latest` → `gemini-flash-latest` → lokal offline-hjärna |
+| Allt annat | Vanilla JS | Karusell, `<dialog>`-lightbox, filter, reveals, split-text, count-up, cursor, preloader, sidövergång |
 
-**Byt tillbaka till helt monospace:** sätt `--font-display: var(--font-mono);` i `:root` (style.css).
+**Byt tillbaka till helt monospace:** sätt `--font-display: var(--font-mono);` i `:root` (css/style.css).
 
 ## Projektstruktur
 
 ```
 LABorderTechOakLjusne/
-├── index.html          # Startsida
-├── galleri.html        # Gallerisida med kategorifilter
-├── style.css           # All styling (delas av båda sidorna)
-├── app.js              # Alla beteenden (defensiv — funkar på båda sidorna)
-└── img/
-    ├── lagul2b.png         # LA STUDIO-loggan (pipigul i dark mode via CSS-filter)
-    ├── favicon.svg / -32.png / apple-touch-icon.png
-    ├── karusell/           # Karusell- + fotoväggs- + galleribilder
-    ├── movies/             # Hero-video (mp4)
-    └── galleri/R.jpg       # BEVARAS som fil — visas inte
+├── index.html              # Startsida
+├── galleri.html            # Gallerisida med kategorifilter
+├── css/
+│   ├── style.css           # All sidstyling (tokens, komponenter, sektioner, responsivt)
+│   └── chat.css            # AI-chattens widget
+├── js/
+│   ├── main.js             # Alla beteenden (defensivt — funkar på båda sidorna)
+│   ├── chat.js             # AI-assistenten "Alva" (Gemini + offline-hjärna)
+│   ├── apikey.js           # GITIGNORAD — sätter window.GEMINI_API_KEY
+│   └── apikey.example.js   # Mall: kopiera till apikey.js och klistra in nyckel
+├── img/
+│   ├── lagul2b.png         # LA STUDIO-loggan (pipigul i dark mode via CSS-filter)
+│   ├── lars.jpg            # Porträtt (280×280 — be om högre upplösning)
+│   ├── favicon.svg / favicon-32.png / apple-touch-icon.png
+│   ├── karusell/           # 5 foton + 1400px-varianter (-1400.jpg) för srcset
+│   ├── movies/hero.mp4     # Showreel (H.264)
+│   └── galleri/R.jpg       # BEVARAS som fil — visas inte
+├── .gitignore              # js/apikey.js
+└── README.md
 ```
 
-**Porträtt:** Om mig-sektionen använder en CSS-platshållare (`.about-portrait` med LA-monogram). Byt mot `<img src="img/lars.jpg">` när ett foto finns (kommentar finns i index.html).
+## Kodkonventioner
+
+- **BEM** överallt: `.block__element--modifier`, tillstånd via `.is-open` / `.is-active` / `.is-revealed`.
+- **Design-tokens** i `:root` (`--bg`, `--surface`, `--text`, `--accent`, `--line`, `--space-*`, `--radius`, `--z-*`). Mörkt tema = `:root[data-theme="dark"]` som bara skriver över tokens. Linjer och tonade ytor härleds med `color-mix()` ur accenten.
+- **Modern CSS**: intervall-media-queries (`@media (width <= 768px)`), individuella transform-egenskaper (`translate`, `scale`), `:is()`/`:has()`, `inset`, logiska egenskaper (`margin-inline`, `padding-block`), `text-wrap: balance/pretty`, `aspect-ratio`, `clamp()`, `<dialog>` med `::backdrop`.
+- **Modern JS**: `const`/arrow functions, optional chaining, `dataset`, `replaceChildren`, `async/await` + `AbortController`. Klassiska `<script defer>` (inte ES-moduler) så sidan funkar över `file://`.
+- **Återanvändbara komponenter**: `.btn` (+ `--sm`/`--lg`), `.eyebrow`, `.link-underline`, `.icon-btn`, `.form__field`.
+- **Baslinje**: Chrome 111+, Safari 16.4+, Firefox 113+.
 
 ## Sektioner — index.html (i ordning)
 
-| # | Sektion | Beskrivning |
-|---|---|---|
-| 1 | Hero | Logga + **serif-tagline** + sektionsnav |
-| 2 | Karusell `#portfolio` | 5 case (Aurora Studio, Nordvik Interiör …), eyebrow + titel + beskrivning + CTA, pilar, prickar, autorotation |
-| 3 | Vad vi gör `#vad-vi-gor` | Serif-rubrik + 4 kort med Lucide-ikoner |
-| 4 | Teknik-marquee | Scrollande tech-loggor, pausar vid hover |
-| 5 | Video | Autoplay bara när synlig |
-| 6 | Tjänster `#tjanster` | Textsektion |
-| 7 | Statistik | 4 tal med **count-up** vid scroll (120+ / 12 år / 100% / 24h) |
-| 8 | Om mig `#om-mig` | Porträtt-platshållare + bio + signatur |
-| 9 | Fotovägg `#galleri` | Klickbar → lightbox, LJUSNE-bar, länk till galleri.html |
-| 10 | Omdömen `#omdomen` | 3 kundcitat (demo — live via Trustpilot/Yotpo) |
-| 11 | Kontakt `#kontakt` | Formulär → demo-toast |
-| 12 | Footer | CTA-block + 4 kolumner (brand/meny/tjänster/nyhetsbrev) + bottenrad |
+| # | Sektion | Klass / id | Beskrivning |
+|---|---|---|---|
+| 1 | Hero | `.hero` | Logga + serif-tagline + sektionsnav |
+| 2 | Karusell | `.carousel` `#portfolio` | 5 case, gradientscrim, pilar, prickar (`role="tab"`), autorotation bara när synlig |
+| 3 | Vad vi gör | `.services` `#vad-vi-gor` | Serif-rubrik + 4 kort med Lucide-ikoner |
+| 4 | Teknik-marquee | `.marquee` | Scrollande tech-loggor, pausar vid hover |
+| 5 | Showreel | `.showreel` | Video, spelar bara när den syns |
+| 6 | Tjänster | `.pitch` `#tjanster` | Textsektion |
+| 7 | Statistik | `.stats` | Count-up vid scroll (120+ / 12 år / 100% / 24h) |
+| 8 | Om mig | `.about` `#om-mig` | Porträtt + bio + signatur |
+| 9 | Fotovägg | `.portfolio` `#galleri` | Grid-areas, klick → lightbox, LJUSNE-bar |
+| 10 | Omdömen | `.testimonials` `#omdomen` | 3 kundcitat (demo — live via Trustpilot/Yotpo) |
+| 11 | Kontakt | `.contact` `#kontakt` | Formulär → demo-toast (live: Formspree/Netlify Forms) |
+| 12 | Footer | `.footer` | CTA-block + 4 kolumner (brand/meny/tjänster/nyhetsbrev) + bottenrad |
 
 ## Galleri — galleri.html
 
-12 rutor i 3-kolumnsgrid (jämn underkant), filter **Alla / Kreativt / Teknik / Miljö**, klick → lightbox (pilnavigering håller sig inom det filtrerade setet). Delar nav, footer, effektväljare, mobilmeny, lightbox, cursor och preloader med startsidan.
+12 rutor i 3-kolumnsgrid (jämn underkant i 3/2/1 kolumner), filter **Alla / Kreativt / Teknik / Miljö** (`aria-pressed`), klick → lightbox som bara bläddrar inom det filtrerade setet.
 
-## Interaktiva delar (vanilla JS)
+## Interaktiva delar (js/main.js)
 
-- **Lightbox** — alla `.lightbox-trigger` samlas i DOM-ordning; pilar/piltangenter/Escape; navigerar bara bland synliga (respekterar filter).
-- **Split-text** — rubriker med `data-split` fadear in per tecken (25 ms stagger). Av i Essential/reduced-motion.
-- **Count-up** — `.stat-number[data-count]` räknar upp vid scroll (IntersectionObserver).
-- **Preloader** — LA-monogram, visas en gång per session (`sessionStorage`), fade-out. Aldrig i Essential.
-- **Custom cursor + magnetiska CTA** — endast Cinematic + fine pointer. Native cursor göms först vid första musrörelsen.
-- **Sidövergång** — fade-out vid klick på interna `.html`-länkar, fade-in vid load. Av i Essential.
-- **Kontakt & nyhetsbrev** — demo (`preventDefault` + validering + toast). Live: Formspree/Netlify Forms, Klaviyo/Mailchimp.
+- **Lightbox** — ett riktigt `<dialog>`: `showModal()` ger fokusfälla, Escape och top-layer gratis, och kan aldrig bli en osynlig klickfångare. Pilar/piltangenter bläddrar bland synliga `.lightbox-trigger`.
+- **Split-text** — `[data-split]`-rubriker tonas in per tecken (25 ms stagger). Varje ord wrappas i `.split-text__word` med `nowrap` så rubriker aldrig bryts mitt i ett ord.
+- **Count-up** — `.stats__number[data-count][data-suffix]` via IntersectionObserver.
+- **Preloader** — LA-monogram, en gång per session (`sessionStorage laljusne:skipPreloader`).
+- **Custom cursor + magnetiska knappar** — endast Cinematic + `(hover:hover) and (pointer:fine)`.
+- **Sidövergång** — fade mellan index och galleri. Av i Essential/reduced-motion.
+- **Toast** — global `showToast(text, [knapptext, callback])`, delas av formulär, FPS-vakt och chatt.
+
+## AI-chatt "Alva" (js/chat.js + css/chat.css)
+
+Flytande knapp nere till höger. Widgeten injiceras av JS så HTML-filerna hålls rena.
+
+- Nyckeln läses från `js/apikey.js` (**gitignorad** — Google spärrar nycklar i publika repon). Kopiera `js/apikey.example.js` → `js/apikey.js` och klistra in nyckel från https://aistudio.google.com/apikey.
+- Utan nyckel, eller om API:et inte svarar inom 12 s per modell, svarar en lokal offline-hjärna med fakta om LA-Studio. Den publikt deployade sidan (Azure) kör därför alltid offline-läget — en riktig publik chatt behöver en backend-proxy.
+- Systemprompt byggs från sidans fakta (tjänster, arbetssätt, exempelprojekt, "priser offereras individuellt"). Inga påhittade priser.
+- Respekterar effektläget (ingen skrivmaskinsanimation i Essential) och temat.
 
 ## Effektlägen (data-perf)
 
-Flytande knapp nere till höger. Sparas i `localStorage["laljusne:perfMode"]`, sätts före paint. Utan val: `prefers-reduced-motion` → Essential, annars **Balanced** (Cinematic är alltid opt-in).
+Flytande sliders-knapp **nere till vänster** (chatten har höger). Sparas i `localStorage["laljusne:perfMode"]`, sätts före paint. Utan val: `prefers-reduced-motion` → Essential, annars **Balanced** (Cinematic är alltid opt-in).
 
 | Läge | Innehåll |
 |---|---|
-| **Essential** | Inga animationer, ingen preloader/cursor/sidövergång, marquee står still, video pausad, reveals/split-text/count-up av (slutvärden visas direkt) |
+| **Essential** | Inga animationer, ingen preloader/cursor/sidövergång, marquee står still, video med kontroller, reveals/split-text/count-up av (slutvärden direkt) |
 | **Balanced** (default) | Reveals, split-text, count-up, marquee, hover, autorotation, video, sidövergång — men ingen Lenis/cursor/parallax |
-| **Cinematic** | Allt + Lenis + custom cursor + magnetiska CTA + parallax. FPS-vakt föreslår Balanced vid < 45 fps |
+| **Cinematic** | Allt + Lenis + custom cursor + magnetiska knappar + parallax. FPS-vakt föreslår Balanced vid < 45 fps |
+
+Lagerordning (`--z-*`): nav 1000 < effektväljare 1400 < chatt 1450 < backdrop 1500 < mobilmeny 1600 < toast 2100 < cursor 2500 < preloader 3000. `<dialog>` ligger i top layer.
 
 ## Design & tema
 
-- Färger: off-white `#eeefec`, oliv `#747247` (+ `--accent-strong` för liten text), LJUSNE-gul `#c8b832`
-- Olivtonade skuggor, egna mörkare värden i dark mode, radius 2–4 px
-- Dark mode: `data-theme="dark"` före paint, `localStorage.theme`. Loggan blir pipigul via CSS-filter.
-- Oliv scrollbar, animerad nav-understrykning
+- Färger: off-white `#eeefec`, oliv `#747247` (+ `--accent-strong #5c5a35` för liten text, WCAG AA), LJUSNE-gul `#c8b832`. Knappar på accent använder `--on-accent` (vit i ljust, nästan svart i mörkt läge för kontrast).
+- Olivtonade skuggor, egna mörkare värden i dark mode, radius 2–4 px, eyebrows med flankerande linjer.
+- Dark mode: `data-theme="dark"` före paint, `localStorage.theme`, `color-scheme` följer temat (formulär/scrollbar). Loggan blir pipigul via CSS-filter.
+- `<meta name="theme-color">` för ljust/mörkt, Open Graph-taggar, skip-link till innehållet.
 
 ## Hur man kör
 
-Öppna `index.html` direkt, eller `npx serve .` — inga byggsteg.
+Öppna `index.html` direkt, eller `npx serve .` — inga byggsteg. För AI-chatten: skapa `js/apikey.js` enligt ovan.
 
 ## Responsivt
 
-Breakpoints **1200 / 1024 / 880 / 768 / 480**. ≤880 hamburgare, ≤768 stats 2×2 + Om mig staplad + testimonials 1 kolumn + footer 2 kolumner + cursor av, ≤480 stats/footer 1 kolumn. `overflow-x: hidden` på både `html` och `body`.
+Breakpoints **1200 / 1024 / 880 / 768 / 480** (intervallsyntax). ≤880 hamburgare (slide-in-meny med X-knapp, hamburgaren göms medan menyn är öppen), ≤768 stats 2×2 + Om mig staplad + testimonials 1 kolumn + footer 2 kolumner + cursor av + toast ovanför de flytande knapparna, ≤480 footer/galleri 1 kolumn. `overflow-x: hidden` på både `html` och `body`.
+
+Bilder: `width`/`height` på alla `<img>` (ingen layout-shift), `srcset` med 1400px-varianter för de tre 4400px-fotona, `loading="lazy"` under vecket, `fetchpriority="high"` på logga + första slide.
 
 ## Webbläsarstöd
 
-Chrome 90+, Firefox 88+, Safari 14+. `100dvh`-fallback, utan IntersectionObserver visas allt direkt.
+Chrome 111+, Firefox 113+, Safari 16.4+ (`color-mix`, `:has`, intervall-media-queries, `<dialog>`). `100dvh` med `100vh`-fallback.
