@@ -283,7 +283,18 @@
         </section>
 
         <!-- Showreel — spelas bara när den syns, aldrig i Essential -->
-        <video class="showreel" id="heroFilm" muted loop playsinline preload="metadata" aria-label="Showreel">
+        <video
+          class="showreel"
+          id="heroFilm"
+          poster="img/movies/hero-poster.jpg"
+          width="1920"
+          height="1080"
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          aria-label="Showreel"
+        >
           <source src="img/movies/hero.mp4" type="video/mp4" />
         </video>
 
@@ -500,7 +511,7 @@
 
         <div class="footer__bottom">
           <span>© 2026 LA-Studio</span>
-          <a href="#">Integritet &amp; cookies</a>
+          <a href="#integritet">Integritet &amp; cookies</a>
           <span>Byggd med omsorg i Ljusne</span>
         </div>
       </div>
@@ -575,7 +586,7 @@
 
     <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js" defer></script>
+    <!-- Lenis laddas dynamiskt av main.js — bara i effektläget Cinematic -->
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js" defer></script>
     <script src="js/apikey.js" defer></script>
     <script src="js/main.js" defer></script>

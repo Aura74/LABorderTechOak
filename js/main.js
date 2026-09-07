@@ -369,26 +369,40 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   );
 })();
 
-/* ===== CINEMATIC: Lenis + parallax ===== */
-if (perfMode === "cinematic" && !reducedMotion) {
-  if (window.Lenis) {
-    root.style.scrollBehavior = "auto";
-    const lenis = new Lenis({ lerp: 0.1 });
-    const raf = (time) => {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    };
-    requestAnimationFrame(raf);
+/* ===== CINEMATIC: Lenis + parallax =====
+   Lenis laddas dynamiskt bara här — Balanced/Essential hämtar aldrig skriptet. */
+const LENIS_URL = "https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js";
 
-    $$('a[href^="#"]').forEach((link) => {
-      link.addEventListener("click", (e) => {
-        const target = link.hash.length > 1 && document.querySelector(link.hash);
-        if (!target) return;
-        e.preventDefault();
-        lenis.scrollTo(target, { offset: -80 });
+const loadScript = (src) =>
+  new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = src;
+    script.onload = resolve;
+    script.onerror = reject;
+    document.head.append(script);
+  });
+
+if (perfMode === "cinematic" && !reducedMotion) {
+  loadScript(LENIS_URL)
+    .then(() => {
+      root.style.scrollBehavior = "auto";
+      const lenis = new Lenis({ lerp: 0.1 });
+      const raf = (time) => {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      };
+      requestAnimationFrame(raf);
+
+      $$('a[href^="#"]').forEach((link) => {
+        link.addEventListener("click", (e) => {
+          const target = link.hash.length > 1 && document.querySelector(link.hash);
+          if (!target) return;
+          e.preventDefault();
+          lenis.scrollTo(target, { offset: -80 });
+        });
       });
-    });
-  }
+    })
+    .catch(() => {}); // CDN nere → vanlig scroll, inget annat påverkas
 
   // Subtil parallax på fotoväggens två stora rutor (containrarna, inte img —
   // annars krockar den med hover-zoomen)
@@ -491,9 +505,13 @@ if (perfMode === "cinematic" && !reducedMotion && !sessionStorage.getItem(FPS_SU
   );
 })();
 
-/* ===== SIDÖVERGÅNG (fade mellan index & galleri) ===== */
+/* ===== SIDÖVERGÅNG (fade mellan index & galleri) =====
+   Över http(s) i moderna webbläsare sköter CSS @view-transition detta.
+   JS-fallbacken körs bara när det saknas — t.ex. över file:// (opaque origin)
+   eller i äldre webbläsare. */
 (function initPageTransition() {
-  if (motionOff) return;
+  const nativeViewTransitions = location.protocol.startsWith("http") && "onpagereveal" in window;
+  if (motionOff || nativeViewTransitions) return;
   $$('a[href*=".html"]').forEach((link) => {
     if (link.origin !== location.origin || link.target === "_blank") return;
     link.addEventListener("click", (e) => {
@@ -502,6 +520,64 @@ if (perfMode === "cinematic" && !reducedMotion && !sessionStorage.getItem(FPS_SU
       document.body.classList.add("page-out");
       setTimeout(() => (location.href = link.href), 320);
     });
+  });
+})();
+
+/* ===== COOKIE-NOTIS + INTEGRITETSDIALOG =====
+   Sidan sätter inga spårningscookies — bara localStorage för tema,
+   effektläge och den här notisen. Markupen injiceras så båda sidorna delar den. */
+(function initPrivacy() {
+  const COOKIE_KEY = "laljusne:cookies";
+
+  const dialog = document.createElement("dialog");
+  dialog.className = "privacy";
+  dialog.id = "privacy";
+  dialog.setAttribute("aria-labelledby", "privacyTitle");
+  dialog.innerHTML = `
+    <div class="privacy__inner">
+      <button class="icon-btn privacy__close" type="button" aria-label="Stäng">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <p class="eyebrow">Integritet</p>
+      <h2 id="privacyTitle">Så hanterar sidan dina uppgifter</h2>
+      <p>LA-Studio sätter <strong>inga spårningscookies</strong> och använder ingen analys- eller annonsteknik. Det som sparas lokalt i din webbläsare är:</p>
+      <ul>
+        <li><strong>Tema</strong> — ljust eller mörkt läge.</li>
+        <li><strong>Effektläge</strong> — Essential, Balanced eller Cinematic.</li>
+        <li><strong>Den här notisen</strong> — så att den inte visas igen.</li>
+      </ul>
+      <p>Typsnitt och ikoner hämtas från Google Fonts, cdnjs och jsDelivr. Skriver du till assistenten Alva skickas meddelandet till Googles Gemini-API för att besvaras; inget sparas hos LA-Studio.</p>
+      <p>Kontaktformuläret och nyhetsbrevet är demonstrationer — inget skickas och ingen adress lagras.</p>
+    </div>`;
+  document.body.append(dialog);
+
+  dialog.querySelector(".privacy__close").addEventListener("click", () => dialog.close());
+  dialog.addEventListener("click", (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest('a[href="#integritet"]')) return;
+    e.preventDefault();
+    dialog.showModal();
+  });
+
+  if (localStorage.getItem(COOKIE_KEY)) return;
+
+  const banner = document.createElement("div");
+  banner.className = "cookie";
+  banner.setAttribute("role", "region");
+  banner.setAttribute("aria-label", "Cookies och integritet");
+  banner.innerHTML = `
+    <p class="cookie__text">Inga spårningscookies här — bara dina inställningar för tema och effekter sparas lokalt.
+      <a href="#integritet">Läs mer</a></p>
+    <div class="cookie__actions">
+      <button class="btn" type="button" data-cookie="accept">Okej</button>
+    </div>`;
+  document.body.append(banner);
+
+  banner.querySelector("[data-cookie]").addEventListener("click", () => {
+    localStorage.setItem(COOKIE_KEY, "accepted");
+    banner.hidden = true;
   });
 })();
 

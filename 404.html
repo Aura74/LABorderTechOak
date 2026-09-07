@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sidan finns inte — LA-Studio</title>
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#eeefec" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
+
+    <link rel="icon" type="image/svg+xml" href="/img/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+
+    <!-- Tema + effektläge sätts FÖRE första målning så inget blinkar -->
+    <script>
+      (() => {
+        const html = document.documentElement;
+        try {
+          const theme = localStorage.getItem("theme");
+          if (theme === "dark" || (!theme && matchMedia("(prefers-color-scheme: dark)").matches)) {
+            html.dataset.theme = "dark";
+          }
+          let perf = localStorage.getItem("laljusne:perfMode");
+          if (!["essential", "balanced", "cinematic"].includes(perf)) {
+            perf = matchMedia("(prefers-reduced-motion: reduce)").matches ? "essential" : "balanced";
+          }
+          html.dataset.perf = perf;
+        } catch {
+          html.dataset.perf = "balanced";
+        }
+      })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Courier+Prime:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- Absoluta sökvägar: Azure visar den här sidan på vilken okänd URL som helst -->
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <nav class="nav" aria-label="Huvudmeny">
+        <a href="/" aria-label="Till startsidan">
+          <img class="nav__logo" src="/img/lagul2b.png" alt="LA Studio" width="1140" height="257" />
+        </a>
+        <ul class="nav__links">
+          <li><a class="nav__link" href="/">Hem</a></li>
+          <li><a class="nav__link" href="/galleri.html">Galleri</a></li>
+          <li>
+            <button class="icon-btn theme-toggle" id="themeToggle" type="button" aria-label="Byt tema">
+              <i class="fa-solid fa-moon"></i>
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <main class="main error" id="innehall">
+        <div>
+          <div class="error__code" aria-hidden="true">404</div>
+          <p class="eyebrow">Sidan finns inte</p>
+          <h1>Den här adressen leder ingenstans</h1>
+          <p>Sidan kan ha flyttats, eller så blev länken fel. Startsidan och galleriet finns kvar där de ska.</p>
+          <div class="error__actions">
+            <a class="btn" href="/">Till startsidan</a>
+            <a class="btn btn--ghost" href="/galleri.html">Se galleriet</a>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+    <script src="/js/main.js" defer></script>
+  </body>
+</html>

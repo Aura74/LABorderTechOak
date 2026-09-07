@@ -506,9 +506,15 @@ a {
   transition: filter var(--speed);
 }
 
+/* Liten logga i navigationen (404-sidan) */
+.nav__logo {
+  height: 34px;
+  width: auto;
+  transition: filter var(--speed);
+}
+
 /* Loggan blir pipigul i mörkt läge */
-:root[data-theme="dark"] .hero__logo,
-:root[data-theme="dark"] .footer__logo {
+:root[data-theme="dark"] :is(.hero__logo, .nav__logo, .footer__logo) {
   filter: brightness(0) invert(1) sepia(1) saturate(10000%);
 }
 
@@ -1744,6 +1750,176 @@ body.page-out {
   transition: opacity 0.35s ease;
 }
 
+/* Cross-document View Transitions (Chrome 126+, Safari 18.2+): webbläsaren
+   cross-fadar själv mellan index och galleri över http(s). Kräver same-origin,
+   så över file:// tar JS-fallbacken i main.js över. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.35s;
+}
+
+html[data-perf="essential"]::view-transition-old(root),
+html[data-perf="essential"]::view-transition-new(root) {
+  animation: none;
+}
+
+/* ===== 24b. COOKIE-NOTIS + INTEGRITETSDIALOG (injiceras av main.js) ===== */
+.cookie {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  z-index: var(--z-toast);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: min(600px, calc(100vw - 2rem));
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-popover);
+  translate: -50% 0;
+  animation: cookieIn 0.5s var(--ease) both;
+}
+
+.cookie[hidden] {
+  display: none;
+}
+
+@keyframes cookieIn {
+  from {
+    opacity: 0;
+    translate: -50% 16px;
+  }
+}
+
+.cookie__text {
+  flex: 1;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.cookie__text a {
+  color: var(--accent-strong);
+  text-underline-offset: 3px;
+}
+
+.cookie__actions {
+  flex: none;
+  display: flex;
+  gap: 8px;
+}
+
+.cookie .btn {
+  padding: 10px 16px;
+  font-size: 0.7rem;
+}
+
+.btn--ghost {
+  background: none;
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+
+.btn--ghost:hover {
+  background: var(--accent-tint);
+  border-color: var(--accent);
+}
+
+.privacy {
+  width: min(560px, calc(100vw - 2rem));
+  padding: 0;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-popover);
+}
+
+.privacy::backdrop {
+  background: rgb(10 10 8 / 0.6);
+}
+
+.privacy[open] {
+  animation: lightboxIn var(--speed) ease;
+}
+
+.privacy__inner {
+  padding: 28px;
+}
+
+.privacy__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.privacy h2 {
+  margin: 6px 0 14px;
+  font-size: 1.8rem;
+}
+
+.privacy p,
+.privacy li {
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.privacy ul {
+  margin-bottom: 14px;
+  padding-left: 1.2rem;
+}
+
+.privacy strong {
+  color: var(--text);
+}
+
+/* ===== 24c. 404-SIDA ===== */
+.error {
+  display: grid;
+  place-items: center;
+  min-height: 60vh;
+  padding-block: var(--space-lg);
+  text-align: center;
+}
+
+.error__code {
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 16vw, 11rem);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--accent-strong);
+}
+
+.error h1 {
+  margin: 10px 0 14px;
+  font-size: clamp(1.8rem, 3.4vw, 3rem);
+}
+
+.error p {
+  max-width: 46ch;
+  margin: 0 auto 28px;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.error__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
 /* ===== 25. SCROLLBAR (webkit) ===== */
 ::-webkit-scrollbar {
   width: 11px;
@@ -2007,9 +2183,15 @@ html[data-perf="essential"] .marquee__track {
     bottom: 16px;
   }
 
-  /* Toast ovanför de flytande knapparna */
-  .toast {
+  /* Toast och cookie-notis ovanför de flytande knapparna */
+  .toast,
+  .cookie {
     bottom: 84px;
+  }
+
+  .cookie {
+    flex-direction: column;
+    text-align: center;
   }
 
   /* Custom cursor aldrig på touch */

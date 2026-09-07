@@ -23,6 +23,8 @@ Portfolio-/studiosida för webbutveckling (demo, ingen backend). Vanilla HTML/CS
 LABorderTechOakLjusne/
 ├── index.html              # Startsida
 ├── galleri.html            # Gallerisida med kategorifilter
+├── 404.html                # Egen felsida (absoluta sökvägar — visas på valfri URL)
+├── staticwebapp.config.json # Azure SWA: 404-rewrite + säkerhetsheaders
 ├── css/
 │   ├── style.css           # All sidstyling (tokens, komponenter, sektioner, responsivt)
 │   └── chat.css            # AI-chattens widget
@@ -36,7 +38,7 @@ LABorderTechOakLjusne/
 │   ├── lars.jpg            # Porträtt (280×280 — be om högre upplösning)
 │   ├── favicon.svg / favicon-32.png / apple-touch-icon.png
 │   ├── karusell/           # 5 foton + 1400px-varianter (-1400.jpg) för srcset
-│   ├── movies/hero.mp4     # Showreel (H.264)
+│   ├── movies/hero.mp4     # Showreel (H.264) + hero-poster.jpg (1600×900 poster-bild)
 │   └── galleri/R.jpg       # BEVARAS som fil — visas inte
 ├── .gitignore              # js/apikey.js
 └── README.md
@@ -59,7 +61,7 @@ LABorderTechOakLjusne/
 | 2 | Karusell | `.carousel` `#portfolio` | 5 case, gradientscrim, pilar, prickar (`role="tab"`), autorotation bara när synlig |
 | 3 | Vad vi gör | `.services` `#vad-vi-gor` | Serif-rubrik + 4 kort med Lucide-ikoner |
 | 4 | Teknik-marquee | `.marquee` | Scrollande tech-loggor, pausar vid hover |
-| 5 | Showreel | `.showreel` | Video, spelar bara när den syns |
+| 5 | Showreel | `.showreel` | Video med poster-bild, spelar bara när den syns |
 | 6 | Tjänster | `.pitch` `#tjanster` | Textsektion |
 | 7 | Statistik | `.stats` | Count-up vid scroll (120+ / 12 år / 100% / 24h) |
 | 8 | Om mig | `.about` `#om-mig` | Porträtt + bio + signatur |
@@ -79,8 +81,14 @@ LABorderTechOakLjusne/
 - **Count-up** — `.stats__number[data-count][data-suffix]` via IntersectionObserver.
 - **Preloader** — LA-monogram, en gång per session (`sessionStorage laljusne:skipPreloader`).
 - **Custom cursor + magnetiska knappar** — endast Cinematic + `(hover:hover) and (pointer:fine)`.
-- **Sidövergång** — fade mellan index och galleri. Av i Essential/reduced-motion.
+- **Sidövergång** — över http(s) sköter CSS `@view-transition { navigation: auto }` cross-faden mellan index och galleri (Chrome 126+, Safari 18.2+). JS-fallbacken (fade-out + navigate) körs bara över `file://` eller i äldre webbläsare. Av i Essential/reduced-motion.
+- **Lenis** — hämtas dynamiskt av `main.js` **bara i Cinematic**; Balanced/Essential laddar aldrig skriptet.
+- **Cookie-notis + integritetsdialog** — sidan sätter inga spårningscookies. En notis visas en gång (`localStorage laljusne:cookies`), och footerns "Integritet & cookies" (`href="#integritet"`) öppnar ett `<dialog>` som listar exakt vad som sparas lokalt. Båda injiceras av `main.js`.
 - **Toast** — global `showToast(text, [knapptext, callback])`, delas av formulär, FPS-vakt och chatt.
+
+## 404-sida (Azure Static Web Apps)
+
+`staticwebapp.config.json` skriver om alla 404 till `/404.html` med behållen statuskod 404 och sätter `X-Content-Type-Options: nosniff` + `Referrer-Policy`. Sidan använder absoluta sökvägar (`/css/style.css`, `/img/...`) eftersom den visas på godtycklig URL, delar tema/typografi med resten och har temaknapp. Lokalt: `npx serve .` och gå till `/404.html` (över `file://` funkar inte absoluta sökvägar).
 
 ## AI-chatt "Alva" (js/chat.js + css/chat.css)
 
